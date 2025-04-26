@@ -1237,7 +1237,7 @@
           // Simular download
           const a = document.createElement('a');
           a.href = '#';
-          a.download = `aqui-aceita-bitcoin-${location === 'current' ? document.getElementById('current-location-name').textContent.toLowerCase() : 'todas-localidades'}.${format}`;
+          a.download = `aceita-bitcoin-${location === 'current' ? document.getElementById('current-location-name').textContent.toLowerCase() : 'todas-localidades'}.${format}`;
           a.click();
         }, 1000);
       });
@@ -1341,7 +1341,7 @@
         // Simular download
         const a = document.createElement('a');
         a.href = '#';
-        a.download = `aqui-aceita-bitcoin-backup-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `aceita-bitcoin-backup-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
       });
 
