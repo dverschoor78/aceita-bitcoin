@@ -41,6 +41,14 @@ def init_db():
 def serve_index():
     return send_from_directory('.', 'templates/index.html')
 
+@app.route('/sobre')
+def serve_sobre():
+    return send_from_directory('.', 'templates/sobre.html')
+
+@app.route('/carteiras')
+def serve_carteiras():
+    return send_from_directory('.', 'templates/carteiras.html')
+
 @app.route('/cadastro')
 def serve_cadastro():
     return send_from_directory('.', 'templates/cadastro.html')
@@ -48,6 +56,10 @@ def serve_cadastro():
 @app.route('/materiais')
 def serve_materiais():
     return send_from_directory('.', 'templates/materiais.html')
+
+@app.route('/estabelecimentos')
+def serve_estabelecimentos():
+    return send_from_directory('.', 'templates/estabelecimentos.html')
 
 # Rota para arquivos estáticos (fallback)
 @app.route('/<path:path>')
