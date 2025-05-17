@@ -4,13 +4,41 @@ import sqlite3
 import os
 from datetime import datetime
 import dotenv
+from OSM import *
 
-dotenv.load_dotenv('.env')
+CLIENT_ID = dotenv.get_key('config.env', 'OSM_CLIENT_ID')
+CLIENT_SECRET = dotenv.get_key('config.env', 'OSM_CLIENT_SECRET')
+REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+SCOPES = [
+'read_prefs',
+'write_prefs',
+'write_diary',
+'write_api',
+'write_changeset_comments',
+'read_gpx',
+'write_gpx',
+'write_notes',
+'write_redactions',
+'write_blocks',
+'consume_messages',
+'send_messages',
+'openid'
+]
+
+try:
+    osm_app = OSM(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        redirect_uri=REDIRECT_URI,
+        scopes=SCOPES
+    )
+except Exception as e:
+    print(f"Erro ao inicializar OSM: {e}")
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
 
-DB_FILE_PATH = dotenv.get_key('.env', 'DB_FILE_PATH') or 'database.db'
+DB_FILE_PATH = dotenv.get_key('config.env', 'DB_FILE_PATH') or 'database.db'
 UPLOAD_FOLDER = os.path.join(app.static_folder, 'logos')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -71,12 +99,37 @@ def static_proxy(path):
 def cadastrar_estabelecimento():
     data = request.form
     arquivo = request.files.get('logo')
+    print(data)
 
     nome_arquivo = None
     if arquivo:
         nome_arquivo = f"{datetime.now().timestamp()}_{arquivo.filename}"
         caminho = os.path.join(UPLOAD_FOLDER, nome_arquivo)
         arquivo.save(caminho)
+    
+    node = Node(
+        lat=data.get('latitude'),
+        lon=data.get('longitude'),
+        tags={
+            'name': data.get('nome'),
+            'amenity': data.get('tipo'),
+            'addr:street': data.get('endereco'),
+            'contact:email': data.get('email'),
+            'contact:phone': data.get('telefone'),
+            'website': data.get('website'),
+            'description': data.get('observacoes'),
+            'currency:XBT': 'yes',
+            'payment:lightning': 'yes' if data.get('aceita_lightning') == 'true' else 'no',
+            'payment:onchain': 'yes' if data.get('aceita_onchain') == 'true' else 'no',
+            'payment:lightning_contactless': 'yes' if data.get('aceita_contactless') == 'true' else 'no',
+            'source': 'Aceita Bitcoin',
+            'source:date': datetime.now().strftime('%Y-%m-%d'),
+            'source:website': 'https://aceitabitcoin.com.br',
+        }
+    )
+
+    node_id = osm_app.post_new_node(node)
+    print(f'https://master.apis.dev.openstreetmap.org/node/{node_id.text}')
 
     with sqlite3.connect(DB_FILE_PATH) as conn:
         cursor = conn.cursor()
@@ -86,21 +139,23 @@ def cadastrar_estabelecimento():
                 aceita_lightning, aceita_onchain, aceita_contactless, data_verificacao, logo_filename
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            data.get('nome'),
-            data.get('tipo'),
-            data.get('endereco'),
-            data.get('email'),
-            data.get('telefone'),
-            data.get('website'),
-            data.get('observacoes'),
-            data.get('aceita_lightning') == 'true',
-            data.get('aceita_onchain') == 'true',
-            data.get('aceita_contactless') == 'true',
-            data.get('data_verificacao'),
+            node.tags['name'],
+            node.tags['amenity'],
+            node.tags['addr:street'],
+            node.tags['contact:email'],
+            node.tags['contact:phone'],
+            node.tags['website'],
+            node.tags['description'],
+            node.tags['payment:lightning'] == 'yes',
+            node.tags['payment:onchain'] == 'yes',
+            node.tags['payment:lightning_contactless'] == 'yes',
+            node.tags['source:date'],
             nome_arquivo
         ))
         conn.commit()
 
+
+#
     return jsonify({"success": True, "message": "Estabelecimento cadastrado com sucesso."})
 
 # API: Listagem
@@ -115,4 +170,4 @@ def listar_estabelecimentos():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=3939, debug=True)

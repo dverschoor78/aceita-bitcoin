@@ -5,16 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Estabelecimento - Aceita Bitcoin?</title>
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Font Awesome para ícones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Estilos personalizados -->
   <link rel="stylesheet" href="static/css/styles.css">
   <link rel="stylesheet" href="static/css/cadastro.css">
+  <!-- Favicon -->
+  <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
   <!-- Modal de Confirmação -->
-  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header bg-success text-white">
@@ -22,38 +26,26 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="mb-0">Estabelecimento cadastrado com sucesso! Em breve seu estabelecimento estará inscrito no
-            Bitcoin Map.</p>
+          <p class="mb-0">Estabelecimento cadastrado com sucesso! Em breve seu estabelecimento estará inscrito no Bitcoin Map.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="goToHomeBtn">Voltar para a página
-            inicial</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="goToHomeBtn">Voltar para a página inicial</button>
         </div>
       </div>
     </div>
   </div>
+
   <div id="header-placeholder"></div>
-  <div class="container">
-    <div class="page-header">
+  <main class="container">
+    <!-- Cabeçalho da página -->
+    <header class="page-header text-center my-4">
       <h1>Cadastrar Estabelecimento que Aceita Bitcoin</h1>
       <p>Ajude a expandir a rede de estabelecimentos que aceitam Bitcoin em sua região</p>
-    </div>
+    </header>
 
-    <div id="feedbackSuccess" class="feedback-message feedback-success"
-      style="display: none; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-      <i class="fas fa-check-circle me-2"></i> Estabelecimento cadastrado com sucesso!
-    </div>
-    <div id="feedbackError" class="feedback-message feedback-error" style="display: none;">
-      <i class="fas fa-exclamation-circle me-2"></i> Erro ao cadastrar estabelecimento. Verifique os dados e tente
-      novamente.
-    </div>
-    <div id="feedbackInfo" class="feedback-message feedback-info" style="display: none;">
-      <i class="fas fa-info-circle me-2"></i> Verificando informações...
-    </div>
-
-    <!-- Por que cadastrar seu estabelecimento? -->
-    <div class="benefits-section">
-      <h2 class="mb-4">Por que cadastrar seu estabelecimento?</h2>
+    <!-- Seção de benefícios -->
+    <section class="benefits-section mb-5">
+      <h2 class="mb-4 text-center">Por que cadastrar seu estabelecimento?</h2>
       <div class="row">
         <div class="col-md-6 mb-4">
           <div class="card benefit-card h-100">
@@ -78,25 +70,39 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Indicador de Passos -->
-    <!-- Formulário de Cadastro -->
-    <div id="cadastro-content">
+    <!-- Seção do formulário -->
+    <section id="cadastro-content">
       <div class="card">
         <div class="card-header">
-          <i class="fas fa-store me-2"></i> Cadastro de Estabelecimento
+          <i class="fas fa-map-marker-alt me-2"></i> Localização no Mapa
         </div>
         <div class="card-body">
-          <form id="cadastroForm">
+          <!-- Mapa Interativo -->
+          <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+          <p class="text-muted">Clique no mapa para posicionar o alfinete no local do estabelecimento.</p>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">
+          <i class="fas fa-store me-2"></i> Dados do Estabelecimento
+        </div>
+        <div class="card-body">
+          <!-- Formulário de cadastro -->
+          <form id="cadastroForm" method="POST" action="/submit-cadastro" novalidate>
+            <!-- Nome do Estabelecimento -->
             <div class="mb-3">
               <label for="nomeEstabelecimento" class="form-label">Nome do Estabelecimento *</label>
-              <input type="text" class="form-control" id="nomeEstabelecimento" required>
+              <input type="text" class="form-control" id="nomeEstabelecimento" name="nomeEstabelecimento" placeholder="Ex.: Restaurante Bom Sabor" required>
+              <div class="invalid-feedback">Por favor, insira o nome do estabelecimento.</div>
             </div>
 
+            <!-- Tipo de Estabelecimento -->
             <div class="mb-3">
               <label for="tipoEstabelecimento" class="form-label">Tipo de Estabelecimento *</label>
-              <select class="form-select" id="tipoEstabelecimento" required>
+              <select class="form-select" id="tipoEstabelecimento" name="tipoEstabelecimento" required>
                 <option value="" selected disabled>Selecione...</option>
                 <option value="restaurant">Restaurante</option>
                 <option value="cafe">Café</option>
@@ -110,29 +116,30 @@
                 <option value="rental">Aluguel</option>
                 <option value="other">Outro</option>
               </select>
+              <div class="invalid-feedback">Por favor, selecione o tipo de estabelecimento.</div>
             </div>
 
-            <div class="mb-3">
-              <label for="logoEstabelecimento" class="form-label">Logo do Estabelecimento</label>
-              <input type="file" class="form-control" id="logoEstabelecimento" accept="image/*">
-              <div class="form-text">Faça upload do logo do seu estabelecimento. Formatos aceitos: JPG, PNG,
-                GIF.</div>
-            </div>
-
+            <!-- Endereço -->
             <div class="mb-3">
               <label for="endereco" class="form-label">Endereço *</label>
-              <input type="text" class="form-control" id="endereco" required>
+              <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Ex.: Rua Exemplo, 123, Bairro, Cidade" required>
+              <div class="invalid-feedback">Por favor, insira o endereço completo.</div>
             </div>
 
+            <!-- Coordenadas -->
             <div class="mb-3">
               <label for="latitude" class="form-label">Latitude *</label>
-              <input type="text" class="form-control" id="latitude" required>
+              <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Clique no mapa para preencher" readonly required>
+              <div class="invalid-feedback">Por favor, clique no mapa para definir a latitude.</div>
+            </div>
+            <div class="mb-3">
+              <label for="longitude" class="form-label">Longitude *</label>
+              <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Clique no mapa para preencher" readonly required>
+              <div class="invalid-feedback">Por favor, clique no mapa para definir a longitude.</div>
             </div>
 
-            <div class="mb-3">
-              <label for="longitute" class="form-label">Longitude *</label>
-              <input type="text" class="form-control" id="longitude" required>
-            </div>
+            <!-- Campo oculto para a tag "source" -->
+            <input type="hidden" id="source" name="source" value="Aqui aceita Bitcoin">
 
             <!-- Métodos de Pagamento Bitcoin -->
             <div class="bitcoin-payment-section mb-4">
@@ -141,75 +148,44 @@
               </h3>
 
               <div class="mb-3">
-                <div class="d-flex flex-wrap mb-3">
-                  <span class="tag-badge tag-xbt">currency:XBT=yes</span>
-                  <span class="tag-badge tag-lightning">payment:lightning</span>
-                  <span class="tag-badge tag-onchain">payment:onchain</span>
-                  <span class="tag-badge tag-contactless">payment:lightning_contactless</span>
-                </div>
-
-                <p class="form-text mb-3">
-                  Estas tags são utilizadas pelo BTC Map para identificar estabelecimentos que aceitam Bitcoin.
-                  Selecione todas as opções aplicáveis ao seu estabelecimento.
-                </p>
-
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="acceptsBitcoin" checked disabled>
+                  <input class="form-check-input" type="checkbox" id="acceptsBitcoin" name="acceptsBitcoin" checked disabled>
                   <label class="form-check-label" for="acceptsBitcoin">
                     <strong>Aceita Bitcoin</strong>
                   </label>
                 </div>
 
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="acceptsLightning">
+                  <input class="form-check-input" type="checkbox" id="acceptsLightning" name="acceptsLightning">
                   <label class="form-check-label" for="acceptsLightning">
                     <strong>Aceita Lightning Network</strong>
                   </label>
                 </div>
 
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="acceptsOnchain">
+                  <input class="form-check-input" type="checkbox" id="acceptsOnchain" name="acceptsOnchain">
                   <label class="form-check-label" for="acceptsOnchain">
                     <strong>Aceita On-chain</strong>
                   </label>
                 </div>
 
                 <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="acceptsLightningContactless">
+                  <input class="form-check-input" type="checkbox" id="acceptsLightningContactless" name="acceptsLightningContactless">
                   <label class="form-check-label" for="acceptsLightningContactless">
                     <strong>Aceita Lightning Contactless</strong>
-                  </label>
-                </div>
-
-                <div class="form-check mb-2" style="display: none;">
-                  <input class="form-check-input" type="checkbox" id="sourceAquiAceitaBitcoin" checked disabled>
-                  <label class="form-check-label" for="sourceAquiAceitaBitcoin">
-                    <strong>Cadastrado através do projeto "Aceita Bitcoin?"</strong>
                   </label>
                 </div>
               </div>
             </div>
 
+            <!-- Upload de Logotipo -->
             <div class="mb-3">
-              <label for="email" class="form-label">Email de Contato</label>
-              <input type="email" class="form-control" id="email">
+              <label for="logoEstabelecimento" class="form-label">Logo do Estabelecimento (opcional)</label>
+              <input type="file" class="form-control" id="logoEstabelecimento" name="logoEstabelecimento" accept="image/*">
+              <small class="form-text text-muted">Faça upload do logo do seu estabelecimento. Formatos aceitos: JPG, PNG, GIF.</small>
             </div>
 
-            <div class="mb-3">
-              <label for="telefone" class="form-label">Telefone de Contato</label>
-              <input type="tel" class="form-control" id="telefone">
-            </div>
-
-            <div class="mb-3">
-              <label for="website" class="form-label">Website</label>
-              <input type="url" class="form-control" id="website" placeholder="https://...">
-            </div>
-
-            <div class="mb-4">
-              <label for="observacoes" class="form-label">Observações</label>
-              <textarea class="form-control" id="observacoes" rows="3"></textarea>
-            </div>
-
+            <!-- Botão de Submissão -->
             <div class="row mt-4">
               <div class="col-12 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">
@@ -220,14 +196,45 @@
           </form>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
   <div id="footer-placeholder"></div>
   <script src="static/js/load-header-and-footer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="static/js/prefill_cadastro.js"></script>
   <script src="static/js/form_submit.js"></script>
-  
+  <script>
+    let map, marker;
+
+    function initMap() {
+      // Inicializar o mapa com o centro em São Paulo, Brasil
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -23.55052, lng: -46.633308 }, // Coordenadas de São Paulo
+        zoom: 13, // Nível de zoom inicial
+      });
+
+      // Adicionar um listener para capturar cliques no mapa
+      map.addListener("click", (event) => {
+        const lat = event.latLng.lat(); // Latitude do clique
+        const lng = event.latLng.lng(); // Longitude do clique
+
+        // Atualizar ou criar o marcador no local clicado
+        if (marker) {
+          marker.setPosition(event.latLng);
+        } else {
+          marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+          });
+        }
+
+        // Preencher os campos de latitude e longitude no formulário
+        document.getElementById("latitude").value = lat;
+        document.getElementById("longitude").value = lng;
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
 
 </html>

@@ -40,7 +40,7 @@ fi
 # Verificar se o remote origin está configurado
 if ! git remote get-url origin &> /dev/null; then
     echo "ERRO: Remote 'origin' não configurado."
-    echo "Para configurar, use: git remote add origin https://github.com/seu-usuario/aqui-aceita-bitcoin.git"
+    echo "Para configurar, use: git remote add origin https://github.com/seu-usuario/aceita-bitcoin.git"
     exit 1
 fi
 

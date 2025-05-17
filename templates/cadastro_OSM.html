@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Estabelecimento - Aceita Bitcoin?</title>
+  <title>Cadastro forma de pagamento par Bitcoin Maps - Aceita Bitcoin?</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="static/css/styles.css">
@@ -51,9 +51,9 @@
       <i class="fas fa-info-circle me-2"></i> Verificando informações...
     </div>
 
-    <!-- Por que cadastrar seu estabelecimento? -->
+    <!-- Por que cadastrar seu estabelecimento no BTC Map? -->
     <div class="benefits-section">
-      <h2 class="mb-4">Por que cadastrar seu estabelecimento?</h2>
+      <h2 class="mb-4">Por que cadastrar seu estabelecimento no BTC Map?</h2>
       <div class="row">
         <div class="col-md-6 mb-4">
           <div class="card benefit-card h-100">
@@ -62,7 +62,7 @@
                 <i class="fas fa-globe"></i>
               </div>
               <h3 class="h5">Visibilidade Global</h3>
-              <p>Seu estabelecimento será visível para usuários de Bitcoin em todo o mundo através do BTC Map.</p>
+              <p>Entusiastas de Bitcoin buscam ativamente locais para consumir usando BTC, fortalecendo a economia descentralizada.</p>
             </div>
           </div>
         </div>
@@ -73,15 +73,31 @@
                 <i class="fas fa-rocket"></i>
               </div>
               <h3 class="h5">Posicionamento Inovador</h3>
-              <p>Destaque-se da concorrência ao adotar tecnologias financeiras inovadoras.</p>
+              <p>Aceitar Bitcoin é fazer parte de um movimento global por liberdade financeira e inovação.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+# sistema precisa fazer autenticação com o Open Street Map para cadastrar o estabelecimento
+
     <!-- Indicador de Passos -->
-    <!-- Formulário de Cadastro -->
+    <!-- Cadastro no Open Street Map -->  
+# **Instruções para o Operador**:
+# msn 01: "Bem-vindo! Clique em 'Editar' para começar a revisar ou cadastrar um estabelecimento."
+# O operador deve clicar no botão "Editar" e verificar visualmente se o ponto corresponde a um estabelecimento existente ou a um novo a ser cadastrado. # msn 02: "Agora, verifique no mapa: o ponto já existe ou é um novo estabelecimento?"
+# **Caso 1: Estabelecimento já existente**:
+# O operador clica no marcador existente. msn 03.1: "Clique sobre o marcador do estabelecimento já cadastrado. 
+# O sistema identifica o ponto e atualiza os dados automaticamente. msn 03.2: Os dados serão atualizados automaticamente."
+# **Caso 2: Novo estabelecimento**:
+# O operador usa a ferramenta do mapa do Open Street Map"Adicionar elemento > Ponto". Nenhum marcador encontrado? Use a ferramenta 'Adicionar elemento > Ponto' para criar um novo cadastro."
+# Clica no marcador temporário. msn 3.3 "Clique no local correto no mapa, sobre o marcador temporário criado durante o pré cadastro do novo estabelecimento."
+# O sistema preenche automaticamente as tags e finaliza o cadastro. msn 04: "Ótimo! As informações básicas serão preenchidas automaticamente. Revise e confirme o cadastro."
+# Mensagem final: msn final: Obrigado por contribuir para o crescimento da comunidade Bitcoin."
+
+
+
     <div id="cadastro-content">
       <div class="card">
         <div class="card-header">
@@ -115,23 +131,13 @@
             <div class="mb-3">
               <label for="logoEstabelecimento" class="form-label">Logo do Estabelecimento</label>
               <input type="file" class="form-control" id="logoEstabelecimento" accept="image/*">
-              <div class="form-text">Faça upload do logo do seu estabelecimento. Formatos aceitos: JPG, PNG,
+              <div class="form-text">Faça upload do logo do seu estabelecimento (opcional). Formatos aceitos: JPG, PNG,
                 GIF.</div>
             </div>
 
             <div class="mb-3">
               <label for="endereco" class="form-label">Endereço *</label>
               <input type="text" class="form-control" id="endereco" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="latitude" class="form-label">Latitude *</label>
-              <input type="text" class="form-control" id="latitude" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="longitute" class="form-label">Longitude *</label>
-              <input type="text" class="form-control" id="longitude" required>
             </div>
 
             <!-- Métodos de Pagamento Bitcoin -->
@@ -181,6 +187,13 @@
                   </label>
                 </div>
 
+                <div class="mb-3">
+                  <label for="checkDate" class="form-label">Data de Verificação</label>
+                  <input type="date" class="form-control" id="checkDate">
+                  <div class="form-text">Data em que a aceitação de Bitcoin foi verificada
+                    (check_date:currency:XBT=YYYY-MM-DD)</div>
+                </div>
+
                 <div class="form-check mb-2" style="display: none;">
                   <input class="form-check-input" type="checkbox" id="sourceAquiAceitaBitcoin" checked disabled>
                   <label class="form-check-label" for="sourceAquiAceitaBitcoin">
@@ -191,22 +204,22 @@
             </div>
 
             <div class="mb-3">
-              <label for="email" class="form-label">Email de Contato</label>
+              <label for="email" class="form-label">Email de Contato (opcional)</label>
               <input type="email" class="form-control" id="email">
             </div>
 
             <div class="mb-3">
-              <label for="telefone" class="form-label">Telefone de Contato</label>
+              <label for="telefone" class="form-label">Telefone de Contato (opcional)</label>
               <input type="tel" class="form-control" id="telefone">
             </div>
 
             <div class="mb-3">
-              <label for="website" class="form-label">Website</label>
+              <label for="website" class="form-label">Website (opcional)</label>
               <input type="url" class="form-control" id="website" placeholder="https://...">
             </div>
 
             <div class="mb-4">
-              <label for="observacoes" class="form-label">Observações</label>
+              <label for="observacoes" class="form-label">Observações (opcional)</label>
               <textarea class="form-control" id="observacoes" rows="3"></textarea>
             </div>
 

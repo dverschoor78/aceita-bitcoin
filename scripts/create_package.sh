@@ -34,7 +34,7 @@ fi
 
 # Criar o arquivo ZIP
 echo "Criando arquivo ZIP..."
-zip_file="aqui-aceita-bitcoin.zip"
+zip_file="aceita-bitcoin.zip"
 zip -r "$zip_file" "$temp_dir"/*
 
 # Mover o ZIP para o diretório de downloads

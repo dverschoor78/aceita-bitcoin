@@ -7,8 +7,9 @@
   <title>Aceita Bitcoin? - Clube BR⚡LN</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/btcmap-flags.css">
+  <link rel="stylesheet" href="static/css/btcmap-flags.css">
   <link rel="stylesheet" href="static/css/index.css">
+  <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -156,64 +157,14 @@
         </div>
       </div>
     </section>
-
-    <!-- Formulário de cadastro rápido -->
-    <section id="cadastro-rapido" class="quick-form">
-      <h3>Cadastro Rápido</h3>
-      <form id="quickForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nomeEstabelecimento">Nome do Estabelecimento</label>
-            <input type="text" id="nomeEstabelecimento" name="nome" placeholder="Ex: Café Colonial Frederica's"
-              required>
-          </div>
-          <div class="form-group">
-            <label for="tipoEstabelecimento">Tipo de Estabelecimento</label>
-            <select id="tipoEstabelecimento" name="tipo" required>
-              <option value="" selected disabled>Selecione...</option>
-              <option value="restaurant">Restaurante</option>
-              <option value="cafe">Café</option>
-              <option value="bar">Bar</option>
-              <option value="hotel">Hotel</option>
-              <option value="shop">Loja</option>
-              <option value="supermarket">Supermercado</option>
-              <option value="bakery">Padaria</option>
-              <option value="pharmacy">Farmácia</option>
-              <option value="healthcare">Serviços de Saúde</option>
-              <option value="rental">Aluguel</option>
-              <option value="other">Outro</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="endereco">Endereço</label>
-            <input type="text" id="endereco" name="endereco" placeholder="Ex: Avenida dos Pioneiros, 1010, Carambeí, PR"
-              required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email de Contato</label>
-            <input type="email" id="email" name="email" placeholder="Ex: contato@seuestablecimento.com.br">
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-12 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" style="width: auto; max-width: 300px;">
-              <i class="fas fa-paper-plane me-2"></i> Continuar Cadastro
-            </button>
-          </div>
-        </div>
-      </form>
-    </section>
   </main>
-
   <div id="footer-placeholder"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/index_dynamic.js"></script>
-  <script src="js/quickForm.js"></script>
-  <script src="js/btcmap-flag-manager.js"></script>
-  <script src="js/load-header-and-footer.js"></script>
+  <script src="static/js/index_dynamic.js"></script>
+  <script src="static/js/quickForm.js"></script>
+  <script src="static/js/btcmap-flag-manager.js"></script>
+  <script src="static/js/load-header-and-footer.js"></script>
 
 </body>
 

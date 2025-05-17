@@ -82,7 +82,7 @@ deploy_github() {
     # Verificar se o remote origin está configurado
     if ! git remote get-url origin &> /dev/null; then
         echo "AVISO: Remote 'origin' não configurado."
-        echo "Para configurar, use: git remote add origin https://github.com/seu-usuario/aqui-aceita-bitcoin.git"
+        echo "Para configurar, use: git remote add origin https://github.com/seu-usuario/aceita-bitcoin.git"
         read -p "Deseja continuar mesmo assim? (s/n): " continue_anyway
         if [ "$continue_anyway" != "s" ]; then
             exit 1
@@ -105,7 +105,7 @@ deploy_github() {
     git push origin main
     
     echo "✓ Deploy para GitHub Pages concluído!"
-    echo "O site estará disponível em alguns minutos em: https://seu-usuario.github.io/aqui-aceita-bitcoin"
+    echo "O site estará disponível em alguns minutos em: https://seu-usuario.github.io/aceita-bitcoin"
 }
 
 # Deploy para hospedagem local
